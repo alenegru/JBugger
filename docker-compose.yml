@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  api:
+    image: 'demo:latest'
+    build:
+      context: .
+    container_name: demoProject
+    ports:
+      - 4200:4200
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/javatraining
+      - SPRING_DATASOURCE_USERNAME=javatraining
+      - SPRING_DATASOURCE_PASSWORD=javatraining
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=javatraining
+      - POSTGRES_PASSWORD=javatraining
